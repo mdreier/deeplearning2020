@@ -44,7 +44,7 @@ class ImageWoof:
     image_count: int = 0
     list_ds: "_tf.data.Dataset" = None
 
-    def __init__(self, dataset: str, cache_dir: str = None) -> None:
+    def __init__(self, dataset: str) -> None:
         if dataset not in ["train", "val"]:
             raise ValueError("Dataset not found")
 
@@ -52,7 +52,7 @@ class ImageWoof:
             origin="https://s3.amazonaws.com/fast-ai-imageclas/imagewoof2-320.tgz",
             fname="imagewoof",
             untar=True,
-            cache_dir=cache_dir
+            cache_dir=ImageWoof.data_dir
         )
         self.data_dir = pathlib.Path(file_path + "2-320/" + dataset)
         print(self.data_dir)
@@ -118,6 +118,7 @@ class ImageWoof:
     @classmethod
     def load_data(
         cls: typing.Type[ImageWoofType],
+        cache_dir: str = None
     ) -> typing.Tuple["_tf.data.Dataset", "_tf.data.Dataset", np.ndarray]:
         train_ds = cls.train()
         return (
