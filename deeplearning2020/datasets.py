@@ -40,7 +40,7 @@ ImageWoofType = typing.TypeVar("ImageWoofType", bound="ImageWoof")
 class ImageWoof:
     BATCH_SIZE: int = 32
     CLASS_NAMES: np.ndarray = None
-    data_dir: pathlib.Path
+    data_dir: pathlib.Path = None
     image_count: int = 0
     list_ds: "_tf.data.Dataset" = None
 
@@ -117,8 +117,7 @@ class ImageWoof:
 
     @classmethod
     def load_data(
-        cls: typing.Type[ImageWoofType],
-        cache_dir: str = None
+        cls: typing.Type[ImageWoofType]
     ) -> typing.Tuple["_tf.data.Dataset", "_tf.data.Dataset", np.ndarray]:
         train_ds = cls.train()
         return (
